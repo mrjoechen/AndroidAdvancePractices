@@ -2,6 +2,14 @@
 
 buildscript {
     repositories {
+        maven {
+            url "http://maven.aliyun.com/nexus/content/repositories/releases/"
+        }
+        maven {
+            url "http://maven.aliyun.com/nexus/content/repositories/snapshots"
+        }
+        maven { url "http://dl.bintray.com/populov/maven" }
+        maven { url "https://jitpack.io" }
         google()
         jcenter()
         
@@ -16,6 +24,14 @@ buildscript {
 
 allprojects {
     repositories {
+        maven {
+            url "http://maven.aliyun.com/nexus/content/repositories/releases/"
+        }
+        maven {
+            url "http://maven.aliyun.com/nexus/content/repositories/snapshots"
+        }
+        maven { url "http://dl.bintray.com/populov/maven" }
+        maven { url "https://jitpack.io" }
         google()
         jcenter()
         
