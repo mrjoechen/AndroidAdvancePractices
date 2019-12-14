@@ -1,0 +1,28 @@
+apply plugin: 'groovy'
+apply plugin: 'maven'
+
+
+dependencies {
+    implementation gradleApi()//gradle sdk
+    implementation localGroovy()//groovy sdk
+}
+
+dependencies {
+    implementation gradleApi()
+    implementation localGroovy()
+}
+//group和version在后面使用自定义插件的时候会用到
+group='com.chenqiao.gradleplugin'
+version='1.0.0'
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            //提交到远程服务器：
+            // repository(url: "http://www.xxx.com/repos") {
+            //    authentication(userName: "admin", password: "admin")
+            // }
+            repository(url: uri('../repo'))
+        }
+    }
+}

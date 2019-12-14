@@ -1,2 +1,2 @@
-include ':app', ':aopdemo', ':pluginapp_host', ':pluginapp_plugin'
+include ':app', ':aopdemo', ':pluginapp_host', ':pluginapp_plugin', ':gradleplugin'
 rootProject.name='AndroidAdvancePractices'

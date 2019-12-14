@@ -1,3 +1,29 @@
+apply plugin: 'com.chenqiao.myplugin'
+buildscript {
+    repositories {
+        maven{
+            url uri('../repo')
+        }
+
+    }
+    dependencies {
+        classpath 'com.chenqiao.gradleplugin:gradleplugin:1.0.0'
+    }
+}
+
+apply plugin:CustomPlugin
+class CustomPlugin implements Plugin<Project> {
+    @Override
+    void apply(Project project) {
+        project.task('CustomPluginTask') {
+            doLast {
+                println "自定义插件"
+            }
+        }
+    }
+}
+
+
 apply plugin: 'com.android.application'
 
 android {
@@ -25,4 +51,5 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
 }
