@@ -86,6 +86,7 @@ public class PingHelper {
 
 
     public PingAidlCallbackImpl registerRemoteCallBack(PingRefreshCallback pingRefreshCallback) {
+        //todo bug Maybe bind(startPing()) operate have not complete when register operate is executed
         if (mPingAidlInterface != null) {
             try {
                 PingAidlCallbackImpl callback = new PingAidlCallbackImpl(pingRefreshCallback);

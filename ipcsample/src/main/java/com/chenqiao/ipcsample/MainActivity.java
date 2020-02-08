@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity implements PingRefreshCallba
     @Override
     protected void onResume() {
         super.onResume();
+        //todo bug Maybe bind(startPing()) operate have not complete when register is executed
         mPingAidlCallback = PingHelper.getInstance().registerRemoteCallBack(this);
 
     }
