@@ -23,8 +23,9 @@ import java.util.Map;
 public class PingAidlImpl extends PingAidlInterface.Stub {
 
     private RemoteCallbackList<PingAidlCallback> mPingAidlCallbacks = new RemoteCallbackList<>();
-    private Handler mHandler;
     private HandlerThread handlerThread;
+    private Handler mHandler;
+
 
     @Override
     public void basicTypes(int anInt, long aLong, boolean aBoolean, float aFloat, double aDouble, String aString) throws RemoteException {
@@ -55,17 +56,29 @@ public class PingAidlImpl extends PingAidlInterface.Stub {
         if (mPingAidlCallbacks != null){
             mPingAidlCallbacks.kill();
         }
+
+        mHandler.removeCallbacksAndMessages(null);
+        if (handlerThread.isAlive()){
+            handlerThread.quitSafely();
+            handlerThread = null;
+        }
     }
 
 
     private void startPing(final String host, final int timeout, final int interval){
 
-        handlerThread = new HandlerThread("ping net handlerThread");
-        if (!handlerThread.isAlive()){
-            handlerThread.start();
+
+        if (handlerThread == null){
+            handlerThread = new HandlerThread("ping net handlerThread");
         }
 
-        mHandler = new Handler(handlerThread.getLooper());
+        if (!handlerThread.isAlive()){
+            handlerThread.start();
+
+            if (mHandler == null){
+                mHandler = new Handler(handlerThread.getLooper());
+            }
+        }
 
         mHandler.postDelayed(new Runnable() {
             @Override

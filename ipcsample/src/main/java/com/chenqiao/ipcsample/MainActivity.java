@@ -20,8 +20,6 @@ public class MainActivity extends AppCompatActivity implements PingRefreshCallba
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         tvDuration = findViewById(R.id.tv_duration);
-
-
         PingHelper.getInstance().startPing(this);
     }
 
