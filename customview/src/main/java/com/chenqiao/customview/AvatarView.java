@@ -52,7 +52,9 @@ public class AvatarView extends View {
         super.onDraw(canvas);
 
         float radius = WIDTH / 2f;
+        //外框
         canvas.drawCircle(OFFSET + radius, OFFSET + radius, radius + Utils.dp2px(5), paint);
+        //缓冲, DST 区域，先保存，否则DST是整个View区域
         int saved = canvas.saveLayer(bounds, paint);
         canvas.drawCircle(OFFSET + radius, OFFSET + radius, radius, paint);
         paint.setXfermode(xfermode);
