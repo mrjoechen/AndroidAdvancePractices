@@ -3,6 +3,7 @@ package com.chenqiao.ipcsample;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.TextView;
 
@@ -14,6 +15,7 @@ public class MainActivity extends AppCompatActivity implements PingRefreshCallba
 
     private PingAidlCallbackImpl mPingAidlCallback;
     private TextView tvDuration;
+    private Handler mHandler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +29,13 @@ public class MainActivity extends AppCompatActivity implements PingRefreshCallba
     protected void onResume() {
         super.onResume();
         //todo bug Maybe bind(startPing()) operate have not complete when register is executed
-        mPingAidlCallback = PingHelper.getInstance().registerRemoteCallBack(this);
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mPingAidlCallback = PingHelper.getInstance().registerRemoteCallBack(MainActivity.this);
+
+            }
+        }, 2000);
 
     }
 
@@ -37,6 +45,8 @@ public class MainActivity extends AppCompatActivity implements PingRefreshCallba
         if (mPingAidlCallback != null){
             PingHelper.getInstance().unRegisterRemoteCallback(mPingAidlCallback);
         }
+
+        mHandler.removeCallbacksAndMessages(null);
     }
 
 

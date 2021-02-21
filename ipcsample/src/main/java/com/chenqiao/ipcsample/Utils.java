@@ -41,6 +41,6 @@ public class Utils {
 
     public static void logggg(String tag, String msg){
 
-        Log.d("process:["+getProcessName(android.os.Process.myPid()) +"]"+"thread:["+ Thread.currentThread().getName() +"]:"+ tag, msg);
+        Log.d("aaaprocess:["+getProcessName(android.os.Process.myPid()) +"]"+"thread:["+ Thread.currentThread().getName() +"]:"+ tag, msg);
     }
 }

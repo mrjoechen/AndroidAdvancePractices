@@ -26,6 +26,7 @@ public class PingHelper {
     private static final int TIME_OUT = 3000;
     private static final int PING_INTERVAL = 4000;
     public static final int WARNNING_PING = 300;
+    //mContext may produce mem leak
     private Context mContext;
 
     private boolean mBound;
@@ -35,8 +36,8 @@ public class PingHelper {
 
     }
 
-    static class Holder{
-        static PingHelper instance = new PingHelper();
+    private static class Holder{
+        private static final PingHelper instance = new PingHelper();
     }
 
     public static PingHelper getInstance(){
@@ -95,6 +96,8 @@ public class PingHelper {
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
+        }else {
+            Utils.logggg(TAG, "mPingAidlInterface is null, ping service have't initialized!!!");
         }
 
         return null;

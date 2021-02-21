@@ -19,9 +19,11 @@ import java.util.Map;
 /**
  * Created by chenqiao on 2020-02-08.
  * e-mail : mrjctech@gmail.com
+ * Running in remote process
  */
 public class PingAidlImpl extends PingAidlInterface.Stub {
 
+    private static final String TAG = "PingAidlImpl";
     private RemoteCallbackList<PingAidlCallback> mPingAidlCallbacks = new RemoteCallbackList<>();
     private HandlerThread handlerThread;
     private Handler mHandler;
@@ -34,11 +36,14 @@ public class PingAidlImpl extends PingAidlInterface.Stub {
 
     @Override
     public void ping(String host, int timeout, int interval) throws RemoteException {
+        Utils.logggg(TAG, "ping() ");
         startPing(host, timeout, interval);
     }
 
     @Override
     public void registerCallback(PingAidlCallback callback) throws RemoteException {
+        Utils.logggg(TAG, "registerCallback() ");
+
         if (callback != null){
             mPingAidlCallbacks.register(callback);
         }
@@ -67,6 +72,7 @@ public class PingAidlImpl extends PingAidlInterface.Stub {
 
     private void startPing(final String host, final int timeout, final int interval){
 
+        Utils.logggg(TAG, "startPing() ");
 
         if (handlerThread == null){
             handlerThread = new HandlerThread("ping net handlerThread");
@@ -86,8 +92,9 @@ public class PingAidlImpl extends PingAidlInterface.Stub {
                 long l = 0;
 
                 try {
+                    //Running in HandlerThread of remote process
                     l = checkServiceValidWithException(host, timeout);
-                    Utils.logggg("pingBinder", l+"ms");
+                    Utils.logggg(TAG, "pingBinder " + l+"ms");
                     broadcastPing(l);
 
                 } catch (IOException e) {
@@ -104,6 +111,9 @@ public class PingAidlImpl extends PingAidlInterface.Stub {
 
 
     private void broadcastPing(long ping){
+
+        Utils.logggg(TAG, "broadcastPing " + ping+"ms");
+
         int callBackSize = mPingAidlCallbacks.beginBroadcast();
         if (callBackSize == 0) {
             return;
@@ -119,6 +129,9 @@ public class PingAidlImpl extends PingAidlInterface.Stub {
     }
 
     public static long checkServiceValidWithException(String host, int timeout) throws IOException {
+
+        Utils.logggg(TAG, "checkServiceValidWithException ");
+
         long startTimeTemp = SystemClock.elapsedRealtime();
         Socket socket = new Socket();
         SocketAddress socketAddress = new InetSocketAddress(host, 80);
